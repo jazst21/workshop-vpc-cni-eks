@@ -42,7 +42,7 @@ This is a custom workshop for EKS VPC CNI
     4. `export LB_NAME=$(kubectl get svc frontend -n workshop -o jsonpath="{.status.loadBalancer.ingress[*].hostname}")`
     5. `echo $LB_NAME`
     6. go to browser paste & go. should be look like this
-    7. ![Application logo](/image/image-1.png "application")
+    7. ![Application logo](/image/image-1.png)
 
 **Lab-2 EKS VPC CNI with Terraform and EKS Blueprint**
 
@@ -56,4 +56,5 @@ This is a custom workshop for EKS VPC CNI
 
 **Lab-4 NAT Use Case**
 
-<br>
+**All VPC CNI Use Cases:**
+all use cases are described in referece : [https://docs.aws.amazon.com/eks/latest/userguide/pod-networking-use-cases.html](https://docs.aws.amazon.com/eks/latest/userguide/pod-networking-use-cases.html)
