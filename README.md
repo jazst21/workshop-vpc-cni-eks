@@ -63,7 +63,7 @@ Once you have logged into the AWS Management Console from your Workshop Studio, 
     2. create using eksctl
         * `eksctl create cluster -f lab-1-eks-vpc-cni-with-eksctl/clusterconfig-1.yaml`
     3. change k8s context
-        * `aws eks update-kubeconfig --region us-west-2 --name eks-vpc-cni-eksctl-1`
+        * `aws eks update-kubeconfig --region us-east-1 --name eks-vpc-cni-eksctl-1`
 3. deploy the application
     1. `helm install workshop /eks-app-mesh-polyglot-demo/workshop/helm-chart/`
     2. `helm ls -n workshop`
@@ -129,7 +129,8 @@ Ensure that you have the following tools installed locally:
 3. [terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli)
 
 Deploy
-
+create new tab in cloud9. move to lab-2 terraform folder
+`lab-2-eks-vpc-cni-with-terraform/vpc-cni-custom-networking`
 To provision this example:
 
 ```
@@ -146,7 +147,7 @@ The following command will update the `kubeconfig` on your local machine and all
 1. Run `update-kubeconfig` command:
 
 ```sh
-aws eks --region <REGION> update-kubeconfig --name <CLUSTER_NAME>
+aws eks --region us-east-1 update-kubeconfig --name eks-vpc-cni-terraform-1
 ```
 
 2. List the nodes running currently
