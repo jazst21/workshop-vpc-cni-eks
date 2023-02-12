@@ -215,35 +215,67 @@ kubectl describe pod aws-node-ttg4h -n kube-system
 
 ### **Lab-4 NAT Use Case**
 
-Destroy
+SNAT for pods
 
-To teardown and remove the resources created in this example:
+If you deployed your cluster using the IPv6 family, then the information in this topic isn't applicable to your cluster, because IPv6 addresses are not network translated. For more information about using IPv6 with your cluster, see Tutorial: Assigning IPv6 addresses to pods and services.
 
-```sh
-terraform destroy -target=kubectl_manifest.eni_config -target=module.eks_blueprints_kubernetes_addons -auto-approve
-terraform destroy -target=module.eks -auto-approve
-terraform destroy -auto-approve
+By default, each pod in your cluster is assigned a private IPv4 address from a classless inter-domain routing (CIDR) block that is associated with the VPC that the pod is deployed in. Pods in the same VPC communicate with each other using these private IP addresses as end points. When a pod communicates to any IPv4 address that isn't within a CIDR block that's associated to your VPC, the Amazon VPC CNI plugin for Kubernetes
+
+translates the pod's IPv4 address to the primary private IPv4 address of the primary elastic network interface of the node that the pod is running on, by default \*.
+
+Due to this behavior:
+
+```
+Resources that are in networks or VPCs that are connected to your cluster VPC using VPC peering, a transit VPC, or Direct Connect can't initiate communication to your pods. Your pods can initiate communication to those resources and receive responses from them though.
+
+Your pods can communicate with internet resources only if the node that they're running on has a public or elastic IP address assigned to it and is in a public subnet. A public subnet's associated route table has a route to an internet gateway. We recommend deploying nodes to private subnets, whenever possible.
 ```
 
-Handle Liveness/Readiness Probe failures¶
+If you have resources in networks or VPCs that are connected to your cluster VPC using VPC peering, a transit VPC, or Direct Connect that need to initiate communication with your pods using an IPv4 address, then you need to change the default configuration with the following command.
+
+```sh
+kubectl set env daemonset -n kube-system aws-node AWS_VPC_K8S_CNI_EXTERNALSNAT=true
+```
+
+If you've changed the setting to true and want your pods to communicate to the internet, then the route table that's associated with the private subnet that your node is deployed in must contain a route to a public NAT gateway.
+
+\*If a pod's spec contains `hostNetwork=true` (default is `false`), then its IP address isn't translated to a different address. This is the case for the kube-proxy and Amazon VPC CNI plugin for Kubernetes pods that run on your cluster, by default. For these pods, the IP address is the same as the node's primary IP address, so the pod's IP address isn't translated. For more information about a pod's hostNetwork setting, see PodSpec v1 core in the Kubernetes API reference.
+
+```sh
+kubectl exec --stdin --tty shell-demo -- /bin/bash
+dig amazon.com
+```
+
+### **Lab-5 Monitoring and debugging**
+
+#### Handle Liveness/Readiness Probe failures
 
 We advise increasing the liveness and readiness probe timeout values (default timeoutSeconds: 10) for EKS 1.20 an later clusters to prevent probe failures from causing your application's Pod to become stuck in a containerCreating state. This problem has been seen in data-intensive and batch-processing clusters. High CPU use causes aws-node probe health failures, leading to unfulfilled Pod CPU requests. In addition to modifying the probe timeout, ensure that the CPU resource requests (default CPU: 25m) for aws-node are correctly configured. We do not suggest updating the settings unless your node is having issues.
 
-We highly encourage you to run sudo bash /opt/cni/bin/aws-cni-support.sh on a node while you engage Amazon EKS support. The script will assist in evaluating kubelet logs and memory utilization on the node. Please consider installing SSM Agent on Amazon EKS worker nodes to run the script.
-Monitor IP Address Inventory¶
+#### Debugging for trouble ticket troubleshooting
+
+We highly encourage you to run
+
+```sh
+sudo bash /opt/cni/bin/aws-cni-support.sh
+```
+
+on a node while you engage Amazon EKS support. The script will assist in evaluating kubelet logs and memory utilization on the node. Please consider installing SSM Agent on Amazon EKS worker nodes to run the script.
+
+#### Monitor IP Address Inventory
 
 You can monitor the IP addresses inventory of subnets using CNI Metrics Helper.
 
-```
+```sh
 maximum number of ENIs the cluster can support
 number of ENIs already allocated
 number of IP addresses currently assigned to Pods
 total and maximum number of IP address available
 ```
 
-You can also set CloudWatch alarms to get notified if a subnet is running out of IP addresses. Please visit EKS user guide for install instructions of CNI metrics helper. Make sure DISABLE\_METRICS variable for VPC CNI is set to false.
+You can also set CloudWatch alarms to get notified if a subnet is running out of IP addresses. Please visit EKS user guide for install instructions of CNI metrics helper. Make sure `DISABLE_METRICS` variable for VPC CNI is set to `false`.
 
-## Creating a metrics dashboard
+##### Creating a metrics dashboard
 
 After you have deployed the CNI metrics helper, you can view the CNI metrics in the Amazon CloudWatch console.
 **To create a CNI metrics dashboard**
@@ -260,8 +292,21 @@ After you have deployed the CNI metrics helper, you can view the CNI metrics in 
 10. In the **Widget type** section, select <strong>Number</strong>.
 11. In the **Customize widget title** section, enter a logical name for your dashboard title, such as <strong>EKS CNI metrics</strong>.
 12. Choose **Add to dashboard** to finish. Now your CNI metrics are added to a dashboard that you can monitor. For more information about Amazon CloudWatch Logs metrics, see [Using Amazon CloudWatch metrics](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/working_with_metrics.html) in the Amazon CloudWatch User Guide.
-![Application logo](/image/image-12.png)
+
+![Application logo](/image/image-11.png)
+
+### End - Destroy the Lab environments
+
+
+To teardown and remove the resources created in this example:
+
+```sh
+terraform destroy -target=kubectl_manifest.eni_config -target=module.eks_blueprints_kubernetes_addons -auto-approve
+terraform destroy -target=module.eks -auto-approve
+terraform destroy -auto-approve
+```
 
 ## **All VPC CNI Use Cases:**
-![Application logo](/image/image-11.png)
+
+![Application logo](/image/image-12.png)
 all use cases are described in referece : [https://docs.aws.amazon.com/eks/latest/userguide/pod-networking-use-cases.html](https://docs.aws.amazon.com/eks/latest/userguide/pod-networking-use-cases.html)

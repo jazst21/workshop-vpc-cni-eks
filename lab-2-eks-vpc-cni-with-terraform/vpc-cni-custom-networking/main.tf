@@ -103,10 +103,10 @@ resource "aws_eks_addon" "vpc_cni" {
       ENI_CONFIG_LABEL_DEF               = "topology.kubernetes.io/zone"
 
       # Reference docs https://docs.aws.amazon.com/eks/latest/userguide/cni-increase-ip-addresses.html
-      ENABLE_PREFIX_DELEGATION = "true"
-      WARM_PREFIX_TARGET       = "1"
-      DISABLE_METRICS = "false"
-      AWS_VPC_K8S_CNI_EXTERNALSNAT = "true"
+      ENABLE_PREFIX_DELEGATION = "true" # usecase 3
+      WARM_PREFIX_TARGET       = "1"  
+      AWS_VPC_K8S_CNI_EXTERNALSNAT = "true" # usecase 4
+      DISABLE_METRICS = "false" # usecase 5
     }
   })
 
