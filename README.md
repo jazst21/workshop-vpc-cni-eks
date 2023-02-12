@@ -1,10 +1,13 @@
-**EKS VPC CNI Workshop**
+# **EKS VPC CNI Workshop**
 
 ***
 
 This is a custom workshop for EKS VPC CNI
-**Getting started & Prerequisites**
-**1\. Connecting to the AWS Workshop Studio**
+
+## **Getting started & Prerequisites**
+
+### **1\. Connecting to the AWS Workshop Studio**
+
 To help you get hands-on as quickly as possible the AWS Container Immersion Day team has pre-created you AWS environment. You will need the participant hash, which should have been provided upon entry, and your email address to track your unique session.
 The facilitator will provide you with an AWS account to deploy the components covered in this workshop. To access this AWS account you need to login to Workshop Studio.
 
@@ -22,7 +25,8 @@ The facilitator will provide you with an AWS account to deploy the components co
 * After you sign in to Workshop Studio, select **Open AWS Console** to access the AWS account provided by Workshop Studio Event. You can also copy the credentials to your own terminal.
 * ![Application logo](/image/image-7.png)
 
-**2\. Open Cloud 9 Environment**
+### **2\. Open Cloud 9 Environment**
+
 Once you have logged into the AWS Management Console from your Workshop Studio, you will already have an EKS cluster and Cloud9 environment. Your Cloud 9 workspace will also have all the required tools installed in it.
 
 * Navigate to [Cloud 9 ](https://console.aws.amazon.com/cloud9) in AWS Console.
@@ -31,8 +35,7 @@ Once you have logged into the AWS Management Console from your Workshop Studio, 
 * Close the welcome screen on Cloud 9 and wait for the terminal to be initialized.
 * ![Application logo](/image/image-9.png)
 
-
-**3\. Install additional tools**
+### **3\. Install additional tools**
 
 1. Install Terraform for linux on the cloud9 environment
     * `sudo apt-get update && sudo apt-get install -y gnupg software-properties-common`
@@ -49,7 +52,7 @@ Once you have logged into the AWS Management Console from your Workshop Studio, 
     * `sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl`
     * `kubectl version --client`
 
-**LAB-1 New EKS VPC CNI with eksctl**
+## **LAB-1 New EKS VPC CNI with eksctl**
 
 1. Clone git repo for this workshop
     * `git clone https://github.com/jazst21/workshop-vpc-cni-eks`
@@ -66,7 +69,7 @@ Once you have logged into the AWS Management Console from your Workshop Studio, 
     6. go to browser paste & go. should be look like this
     7. ![Application logo](/image/image-1.png)
 
-**Lab-2 EKS VPC CNI with Terraform and EKS Blueprint**
+## **Lab-2 EKS VPC CNI with Terraform and EKS Blueprint**
 
 1. make sure you have done "clone git repo" on previous Lab.
 2. create new EKS cluster
@@ -74,9 +77,12 @@ Once you have logged into the AWS Management Console from your Workshop Studio, 
 4. deploy the application
 5. 
 
-**Lab-3 IP addressing Mode Use Case**
+### **Lab-3 IP addressing Mode Use Case**
 
-**Lab-4 NAT Use Case**
 
-**All VPC CNI Use Cases:**
+### **Lab-4 NAT Use Case**
+
+
+## **All VPC CNI Use Cases:**
+
 all use cases are described in referece : [https://docs.aws.amazon.com/eks/latest/userguide/pod-networking-use-cases.html](https://docs.aws.amazon.com/eks/latest/userguide/pod-networking-use-cases.html)
