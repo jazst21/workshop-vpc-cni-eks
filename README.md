@@ -1,13 +1,14 @@
+
 **EKS VPC CNI Workshop**
 
 ***
 
-This is a custom workshop for EKS VPC CNI
+This is a custom workshop for EKS VPC CNI <br/>
 **Getting started & Prerequisites**
 
 1. Login to AWS Workshop Portal
     This workshop creates an AWS account and a Cloud9 environment. You will need the Participant Hash provided upon entry, and your email address to track your unique session.
-    Connect to the portal by clicking the button or browsing to https://dashboard.eventengine.run/ 
+    Connect to the portal by clicking the button or browsing to https://dashboard.eventengine.run/
     . The following screen shows up.
 2. Copy paste user and password
 3. in your browser, create new incognito browser window freshly. use this window to run the workshop. do not use normal window otherwise you will risk using your actual (non workshop) aws account credentials & consumption.
