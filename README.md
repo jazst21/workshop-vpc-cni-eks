@@ -37,6 +37,8 @@ Once you have logged into the AWS Management Console from your Workshop Studio, 
 
 1. Install Terraform for linux on the cloud9 environment
     * `sudo apt-get update && sudo apt-get install -y gnupg software-properties-common`
+    * `touch ~/.bashrc`
+    * `terraform -install-autocomplete`
     * reference: [https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 2. Install eksctl
     * `curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp`
@@ -66,6 +68,7 @@ Once you have logged into the AWS Management Console from your Workshop Studio, 
     5. `echo $LB_NAME`
     6. go to browser paste & go. should be look like this
     7. ![Application logo](/image/image-1.png)
+    8. 
 
 ## **Lab-2 EKS VPC CNI with Terraform and EKS Blueprint**
 
@@ -73,7 +76,14 @@ Once you have logged into the AWS Management Console from your Workshop Studio, 
 2. create new EKS cluster
 3. 
 4. deploy the application
-5. 
+    1. `cd ~/environment/eks-app-mesh-polyglot-demo`
+    2. `helm install workshop ~/environment/eks-app-mesh-polyglot-demo/workshop/helm-chart/`
+    3. `kubectl get pod,svc -n workshop -o wide`
+    4. `export LB_NAME=$(kubectl get svc frontend -n workshop -o jsonpath="{.status.loadBalancer.ingress[*].hostname}")`
+    5. `echo $LB_NAME`
+    6. go to browser paste & go. should be look like this
+    7. ![Application logo](/image/image-1.png)
+    8. 
 
 ### **Lab-3 IP addressing Mode Use Case**
 
