@@ -33,11 +33,24 @@ This is a custom workshop for EKS VPC CNI
     * `git clone https://github.com/jazst21/workshop-vpc-cni-eks`
     * `cd workshop-vpc-cni-eks`
 2. create new EKS cluster
+    1. create using eksctl
+    2. change k8s context
+3. deploy the application
+    1. `cd ~/environment/eks-app-mesh-polyglot-demo`
+    2. `helm install workshop ~/environment/eks-app-mesh-polyglot-demo/workshop/helm-chart/`
+    3. `kubectl get pod,svc -n workshop -o wide`
+    4. `export LB_NAME=$(kubectl get svc frontend -n workshop -o jsonpath="{.status.loadBalancer.ingress[*].hostname}")`
+    5. `echo $LB_NAME`
+    6. go to browser paste & go. should be look like this
+    7. ![Application logo](/image/image-1.png "application")
 
 **Lab-2 EKS VPC CNI with Terraform and EKS Blueprint**
 
 1. make sure you have done "clone git repo" on previous Lab.
-2. 
+2. create new EKS cluster
+3. 
+4. deploy the application
+5. 
 
 **Lab-3 IP addressing Mode Use Case**
 
