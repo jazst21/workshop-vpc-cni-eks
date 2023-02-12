@@ -32,8 +32,8 @@ data "aws_availability_zones" "available" {}
 
 locals {
   # name   = basename(path.cwd)
-  name   = eks-vpc-cni-terraform-1
-  region = "us-east-1"
+  name   = "eks-vpc-cni-terraform-1"
+  region = "us-west-2"
 
   cluster_version = "1.24"
 
