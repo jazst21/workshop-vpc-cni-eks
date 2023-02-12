@@ -9,7 +9,7 @@ iam:
 
 addons:
 - name: vpc-cni
-  version: 1.7.5 # optional
+  version: 1.11 # update to 1.10
   attachPolicyARNs: #optional
   - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
   serviceAccountRoleARN: arn:aws:iam::aws:policy/AmazonEKSCNIAccess # optional
