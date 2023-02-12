@@ -119,7 +119,8 @@ The following command will update the `kubeconfig` on your local machine and all
 
 1. Run `update-kubeconfig` command:
 
-```aws eks --region <REGION> update-kubeconfig --name <CLUSTER_NAME>
+```sh
+aws eks --region <REGION> update-kubeconfig --name <CLUSTER_NAME>
 ```
 
 2. List the nodes running currently
