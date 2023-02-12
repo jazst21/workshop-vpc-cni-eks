@@ -89,26 +89,27 @@ module "eks" {
 # VPC-CNI Custom CNI and IPv4 Prefix Delegation
 ################################################################################
 
-# resource "aws_eks_addon" "vpc_cni" {
-#   cluster_name      = module.eks.cluster_name
-#   addon_name        = "vpc-cni"
-#   resolve_conflicts = "OVERWRITE"
-#   addon_version     = data.aws_eks_addon_version.latest["vpc-cni"].version
+resource "aws_eks_addon" "vpc_cni" {
+  cluster_name      = module.eks.cluster_name
+  addon_name        = "vpc-cni"
+  resolve_conflicts = "OVERWRITE"
+  addon_version     = data.aws_eks_addon_version.latest["vpc-cni"].version
 
-#   configuration_values = jsonencode({
-#     env = {
-#       # Reference https://aws.github.io/aws-eks-best-practices/reliability/docs/networkmanagement/#cni-custom-networking
-#       AWS_VPC_K8S_CNI_CUSTOM_NETWORK_CFG = "true"
-#       ENI_CONFIG_LABEL_DEF               = "topology.kubernetes.io/zone"
+  configuration_values = jsonencode({
+    env = {
+      # Reference https://aws.github.io/aws-eks-best-practices/reliability/docs/networkmanagement/#cni-custom-networking
+      AWS_VPC_K8S_CNI_CUSTOM_NETWORK_CFG = "true"
+      ENI_CONFIG_LABEL_DEF               = "topology.kubernetes.io/zone"
 
-#       # Reference docs https://docs.aws.amazon.com/eks/latest/userguide/cni-increase-ip-addresses.html
-#       ENABLE_PREFIX_DELEGATION = "true"
-#       WARM_PREFIX_TARGET       = "1"
-#     }
-#   })
+      # Reference docs https://docs.aws.amazon.com/eks/latest/userguide/cni-increase-ip-addresses.html
+      ENABLE_PREFIX_DELEGATION = "true"
+      WARM_PREFIX_TARGET       = "1"
+      DISABLE_METRICS = "false"
+    }
+  })
 
-#   tags = local.tags
-# }
+  tags = local.tags
+}
 
 data "aws_eks_addon_version" "latest" {
   for_each = toset(["vpc-cni"])
