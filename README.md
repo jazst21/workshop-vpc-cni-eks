@@ -21,9 +21,17 @@ The facilitator will provide you with an AWS account to deploy the components co
 * You will be presented with terms and event details page. Please read and understand the terms governing use of Workshop Studio accounts. Click the checkbox to agree with the Terms and Conditions and Select **Join event** to continue.
 * ![Application logo](/image/image-6.png)
 * After you sign in to Workshop Studio, select **Open AWS Console** to access the AWS account provided by Workshop Studio Event. You can also copy the credentials to your own terminal.
+* ![Application logo](/image/image-7.png)
 
 **2\. Open Cloud 9 Environment**
 Once you have logged into the AWS Management Console from your Workshop Studio, you will already have an EKS cluster and Cloud9 environment. Your Cloud 9 workspace will also have all the required tools installed in it.
+
+* Navigate to [Cloud 9 ](https://console.aws.amazon.com/cloud9) in AWS Console.
+* Click on **Open IDE** to open your Cloud 9 workspace.
+* ![Application logo](/image/image-8.png)
+* Close the welcome screen on Cloud 9 and wait for the terminal to be initialized.
+* ![Application logo](/image/image-9.png)
+
 
 1. Login to AWS Workshop Portal
     This workshop creates an AWS account and a Cloud9 environment. You will need the Participant Hash provided upon entry, and your email address to track your unique session.
