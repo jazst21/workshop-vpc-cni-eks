@@ -1,6 +1,4 @@
-# **EKS VPC CNI Workshop**
-
-***
+# EKS VPC CNI Workshop
 
 This is a custom workshop for EKS VPC CNI
 
@@ -79,9 +77,7 @@ Once you have logged into the AWS Management Console from your Workshop Studio, 
 
 ### **Lab-3 IP addressing Mode Use Case**
 
-
 ### **Lab-4 NAT Use Case**
-
 
 ## **All VPC CNI Use Cases:**
 
