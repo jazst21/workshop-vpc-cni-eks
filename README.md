@@ -36,9 +36,10 @@ Once you have logged into the AWS Management Console from your Workshop Studio, 
 ### **3\. Install additional tools**
 
 1. Install Terraform for linux on the cloud9 environment
-    * `sudo apt-get update && sudo apt-get install -y gnupg software-properties-common`
-    * `touch ~/.bashrc`
-    * `terraform -install-autocomplete`
+    * `sudo yum install -y yum-utils`
+    * `sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo`
+    * `sudo yum -y install terraform`
+    * `terraform -help plan`
     * reference: [https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 2. Install eksctl
     * `curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp`
