@@ -58,16 +58,43 @@ Once you have logged into the AWS Management Console from your Workshop Studio, 
     * `git clone https://github.com/jazst21/workshop-vpc-cni-eks`
     * `cd workshop-vpc-cni-eks`
 2. create new EKS cluster
-    1. create using eksctl
-    2. change k8s context
+    1. create iam-role
+        * We'll use default iam role for eks vpc cni role
+    2. create using eksctl
+        * `eksctl create cluster -f lab-1-eks-vpc-cni-with-eksctl/clusterconfig-1.yaml`
+    3. change k8s context
+        * `aws eks update-kubeconfig --region us-west-2 --name eks-vpc-cni-eksctl-1`
 3. deploy the application
-    1. `cd ~/environment/eks-app-mesh-polyglot-demo`
-    2. `helm install workshop ~/environment/eks-app-mesh-polyglot-demo/workshop/helm-chart/`
+    1. `helm install workshop /eks-app-mesh-polyglot-demo/workshop/helm-chart/`
+    2. `helm ls -n workshop`
     3. `kubectl get pod,svc -n workshop -o wide`
     4. `export LB_NAME=$(kubectl get svc frontend -n workshop -o jsonpath="{.status.loadBalancer.ingress[*].hostname}")`
     5. `echo $LB_NAME`
     6. go to browser paste & go. should be look like this
     7. ![Application logo](/image/image-1.png)
+
+##### Calculate the number of maximum pods per node.
+
+Download the max pods per node calculator script and change the access mode
+
+```sh
+curl -o max-pods-calculator.sh https://raw.githubusercontent.com/awslabs/amazon-eks-ami/master/files/max-pods-calculator.sh
+chmod +x max-pods-calculator.sh
+```
+
+Calculate the max pods using the max pods calculator script. You can pass the instance type and CNI version to calculate the max pods per node.
+
+```sh
+./max-pods-calculator.sh \\
+--instance-type \<m5.large> \\
+--cni-version <1.9.x-eksbuild.y> \\
+--cni-prefix-delegation-enabled
+```
+
+You can take a look at the max pods calculator script. Without enabling the prefix delegation feature or non-nitro instance types, the calculation of the pods are ENI \* (# of IPv4 per ENI - 1) + 2.
+The calculation changed into ENI ((# of IPv4 per ENI - 1) 16) + 2 where 16 is IPS\_PER\_PREFIX. The pod density per node is significantly more than before.
+Create one of the following node groups with at least one Amazon EC2 Nitro Amazon Linux 2 instance type. See the list of Nitro Amazon Linux 2 Instance Types.
+Once your nodes are deployed, you can run the kubectl describe command in the node to see the max pods in the allocatable.
 
 ## **Lab-2 EKS VPC CNI with Terraform and EKS Blueprint**
 
@@ -223,13 +250,10 @@ By default, each pod in your cluster is assigned a private IPv4 address from a c
 
 translates the pod's IPv4 address to the primary private IPv4 address of the primary elastic network interface of the node that the pod is running on, by default \*.
 
-Due to this behavior:
+###### Due to this behavior:
 
-```
-Resources that are in networks or VPCs that are connected to your cluster VPC using VPC peering, a transit VPC, or Direct Connect can't initiate communication to your pods. Your pods can initiate communication to those resources and receive responses from them though.
-
-Your pods can communicate with internet resources only if the node that they're running on has a public or elastic IP address assigned to it and is in a public subnet. A public subnet's associated route table has a route to an internet gateway. We recommend deploying nodes to private subnets, whenever possible.
-```
+1. Resources that are in networks or VPCs that are connected to your cluster VPC using VPC peering, a transit VPC, or Direct Connect can't initiate communication to your pods. Your pods can initiate communication to those resources and receive responses from them though.
+2. Your pods can communicate with internet resources only if the node that they're running on has a public or elastic IP address assigned to it and is in a public subnet. A public subnet's associated route table has a route to an internet gateway. We recommend deploying nodes to private subnets, whenever possible.
 
 If you have resources in networks or VPCs that are connected to your cluster VPC using VPC peering, a transit VPC, or Direct Connect that need to initiate communication with your pods using an IPv4 address, then you need to change the default configuration with the following command.
 
@@ -296,7 +320,6 @@ After you have deployed the CNI metrics helper, you can view the CNI metrics in 
 ![Application logo](/image/image-11.png)
 
 ### End - Destroy the Lab environments
-
 
 To teardown and remove the resources created in this example:
 

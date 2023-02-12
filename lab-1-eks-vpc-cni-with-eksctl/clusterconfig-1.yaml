@@ -31,3 +31,16 @@ addons:
       - ec2:ModifyNetworkInterfaceAttribute
       - ec2:UnassignPrivateIpAddresses
       Resource: '*'
+
+vpc:
+  clusterEndpoints:
+    publicAccess:  true
+    privateAccess: true
+  nat:
+    gateway: Single # other options: Disable, Single (default)
+
+managedNodeGroups:
+- name: m1
+  instanceType: m5.large
+  desiredCapacity: 2
+  privateNetworking: true
