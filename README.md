@@ -8,8 +8,7 @@ This is a custom workshop for EKS VPC CNI
 To help you get hands-on as quickly as possible the AWS Container Immersion Day team has pre-created you AWS environment. You will need the participant hash, which should have been provided upon entry, and your email address to track your unique session.
 The facilitator will provide you with an AWS account to deploy the components covered in this workshop. To access this AWS account you need to login to Workshop Studio.
 
-* [Click here to open Workshop Studio](https://catalog.us-east-1.prod.workshops.aws/join) login
-* page.
+* [Click here to open Workshop Studio](https://catalog.us-east-1.prod.workshops.aws/join) login page.
 * Select **Email One-Time Password (OTP)** when prompted to sign-in.
 * ![Application logo](/image/image-2.png)
 * Enter your email address and select Send passcode
@@ -33,27 +32,22 @@ Once you have logged into the AWS Management Console from your Workshop Studio, 
 * ![Application logo](/image/image-9.png)
 
 
-1. Login to AWS Workshop Portal
-    This workshop creates an AWS account and a Cloud9 environment. You will need the Participant Hash provided upon entry, and your email address to track your unique session.
-    Connect to the portal by clicking the button or browsing to https://dashboard.eventengine.run/
-    . The following screen shows up.
-2. Copy paste user and password
-3. in your browser, create new incognito browser window freshly. use this window to run the workshop. do not use normal window otherwise you will risk using your actual (non workshop) aws account credentials & consumption.
-4. Log into your Cloud9 Editor and connect to the CLI
-    1. Install Terraform for linux on the cloud9 environment
-        * `sudo apt-get update && sudo apt-get install -y gnupg software-properties-common`
-        * reference: [https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
-    2. Install eksctl
-        * `curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp`
-        * `sudo mv /tmp/eksctl /usr/local/bin`
-        * `eksctl version`
-        * reference : [https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html](https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html)
-    3. Install kubectl
-        * `curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"`
-        * `curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"`
-        * `echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check`
-        * `sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl`
-        * `kubectl version --client`
+**3\. Install additional tools**
+
+1. Install Terraform for linux on the cloud9 environment
+    * `sudo apt-get update && sudo apt-get install -y gnupg software-properties-common`
+    * reference: [https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
+2. Install eksctl
+    * `curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp`
+    * `sudo mv /tmp/eksctl /usr/local/bin`
+    * `eksctl version`
+    * reference : [https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html](https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html)
+3. Install kubectl
+    * `curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"`
+    * `curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"`
+    * `echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check`
+    * `sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl`
+    * `kubectl version --client`
 
 **LAB-1 New EKS VPC CNI with eksctl**
 
