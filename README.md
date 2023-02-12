@@ -225,6 +225,43 @@ terraform destroy -target=module.eks -auto-approve
 terraform destroy -auto-approve
 ```
 
-## **All VPC CNI Use Cases:**
+Handle Liveness/Readiness Probe failures¶
 
+We advise increasing the liveness and readiness probe timeout values (default timeoutSeconds: 10) for EKS 1.20 an later clusters to prevent probe failures from causing your application's Pod to become stuck in a containerCreating state. This problem has been seen in data-intensive and batch-processing clusters. High CPU use causes aws-node probe health failures, leading to unfulfilled Pod CPU requests. In addition to modifying the probe timeout, ensure that the CPU resource requests (default CPU: 25m) for aws-node are correctly configured. We do not suggest updating the settings unless your node is having issues.
+
+We highly encourage you to run sudo bash /opt/cni/bin/aws-cni-support.sh on a node while you engage Amazon EKS support. The script will assist in evaluating kubelet logs and memory utilization on the node. Please consider installing SSM Agent on Amazon EKS worker nodes to run the script.
+Monitor IP Address Inventory¶
+
+You can monitor the IP addresses inventory of subnets using CNI Metrics Helper.
+
+```
+maximum number of ENIs the cluster can support
+number of ENIs already allocated
+number of IP addresses currently assigned to Pods
+total and maximum number of IP address available
+```
+
+You can also set CloudWatch alarms to get notified if a subnet is running out of IP addresses. Please visit EKS user guide for install instructions of CNI metrics helper. Make sure DISABLE\_METRICS variable for VPC CNI is set to false.
+
+## Creating a metrics dashboard
+
+After you have deployed the CNI metrics helper, you can view the CNI metrics in the Amazon CloudWatch console.
+**To create a CNI metrics dashboard**
+
+1. Open the CloudWatch console at [https://console.aws.amazon.com/cloudwatch/](https://console.aws.amazon.com/cloudwatch/).
+2. In the left navigation pane, choose **Metrics** and then select <strong>All metrics</strong>.
+3. Choose the **Graphed metrics** tab.
+4. Choose <strong>Add metrics using browse or query</strong>.
+5. Make sure that under <strong>Metrics</strong>, you've selected the AWS Region for your cluster.
+6. In the Search box, enter **Kubernetes** and then press <strong>Enter</strong>.
+7. Select the metrics that you want to add to the dashboard.
+8. At the upper right of the console, select <strong>Actions</strong>, and then <strong>Add to dashboard</strong>.
+9. In the **Select a dashboard** section, choose <strong>Create new</strong>, enter a name for your dashboard, such as <strong>EKS-CNI-metrics</strong>, and then choose <strong>Create</strong>.
+10. In the **Widget type** section, select <strong>Number</strong>.
+11. In the **Customize widget title** section, enter a logical name for your dashboard title, such as <strong>EKS CNI metrics</strong>.
+12. Choose **Add to dashboard** to finish. Now your CNI metrics are added to a dashboard that you can monitor. For more information about Amazon CloudWatch Logs metrics, see [Using Amazon CloudWatch metrics](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/working_with_metrics.html) in the Amazon CloudWatch User Guide.
+![Application logo](/image/image-12.png)
+
+## **All VPC CNI Use Cases:**
+![Application logo](/image/image-11.png)
 all use cases are described in referece : [https://docs.aws.amazon.com/eks/latest/userguide/pod-networking-use-cases.html](https://docs.aws.amazon.com/eks/latest/userguide/pod-networking-use-cases.html)

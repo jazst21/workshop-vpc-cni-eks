@@ -26,21 +26,16 @@ To create a CNI metrics dashboard
 In the left navigation pane, choose Metrics and then select All metrics.
 
 Choose the Graphed metrics tab.
-
 Choose Add metrics using browse or query.
-
 Make sure that under Metrics, you've selected the AWS Region for your cluster.
-
 In the Search box, enter Kubernetes and then press Enter.
-
 Select the metrics that you want to add to the dashboard.
-
 At the upper right of the console, select Actions, and then Add to dashboard.
-
 In the Select a dashboard section, choose Create new, enter a name for your dashboard, such as EKS-CNI-metrics, and then choose Create.
-
 In the Widget type section, select Number.
-
 In the Customize widget title section, enter a logical name for your dashboard title, such as EKS CNI metrics.
 
 Choose Add to dashboard to finish. Now your CNI metrics are added to a dashboard that you can monitor. For more information about Amazon CloudWatch Logs metrics, see Using Amazon CloudWatch metrics in the Amazon CloudWatch User Guide.
+
+![Application logo](../image/image-11.png)
+

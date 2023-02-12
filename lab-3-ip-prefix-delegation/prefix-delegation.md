@@ -15,3 +15,5 @@ Calculate the max pods using the max pods calculator script. You can pass the in
 You can take a look at the max pods calculator script. Without enabling the prefix delegation feature or non-nitro instance types, the calculation of the pods are ENI * (# of IPv4 per ENI - 1) + 2.
 
 The calculation changed into ENI ((# of IPv4 per ENI - 1) 16) + 2 where 16 is IPS_PER_PREFIX. The pod density per node is significantly more than before.
+
+![Application logo](../image/image-10.png)
