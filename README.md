@@ -1,9 +1,8 @@
-
 **EKS VPC CNI Workshop**
 
 ***
 
-This is a custom workshop for EKS VPC CNI <br/>
+This is a custom workshop for EKS VPC CNI
 **Getting started & Prerequisites**
 
 1. Login to AWS Workshop Portal
@@ -27,4 +26,21 @@ This is a custom workshop for EKS VPC CNI <br/>
         * `echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check`
         * `sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl`
         * `kubectl version --client`
-    4. 
+
+**LAB-1 New EKS VPC CNI with eksctl**
+
+1. Clone git repo for this workshop
+    * `git clone https://github.com/jazst21/workshop-vpc-cni-eks`
+    * `cd workshop-vpc-cni-eks`
+2. create new EKS cluster
+
+**Lab-2 EKS VPC CNI with Terraform and EKS Blueprint**
+
+1. make sure you have done "clone git repo" on previous Lab.
+2. 
+
+**Lab-3 IP addressing Mode Use Case**
+
+**Lab-4 NAT Use Case**
+
+<br>
