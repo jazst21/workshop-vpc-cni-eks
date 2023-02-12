@@ -49,3 +49,5 @@ eksctl create nodegroup \
   --max-pods-per-node <110> -- Count from the max pods calculator
 
 Once your nodes are deployed, you can run the kubectl describe command in the node to see the max pods in the allocatable.
+
+eksctl delete cluster eks-vpc-cni-eksctl-1

@@ -68,7 +68,6 @@ Once you have logged into the AWS Management Console from your Workshop Studio, 
     5. `echo $LB_NAME`
     6. go to browser paste & go. should be look like this
     7. ![Application logo](/image/image-1.png)
-    8. 
 
 ## **Lab-2 EKS VPC CNI with Terraform and EKS Blueprint**
 

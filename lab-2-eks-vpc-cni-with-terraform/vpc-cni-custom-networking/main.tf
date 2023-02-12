@@ -31,7 +31,8 @@ data "aws_eks_cluster_auth" "this" {
 data "aws_availability_zones" "available" {}
 
 locals {
-  name   = basename(path.cwd)
+  # name   = basename(path.cwd)
+  name   = eks-vpc-cni-terraform-1
   region = "us-west-2"
 
   cluster_version = "1.24"
@@ -89,26 +90,26 @@ module "eks" {
 # VPC-CNI Custom CNI and IPv4 Prefix Delegation
 ################################################################################
 
-# resource "aws_eks_addon" "vpc_cni" {
-#   cluster_name      = module.eks.cluster_name
-#   addon_name        = "vpc-cni"
-#   resolve_conflicts = "OVERWRITE"
-#   addon_version     = data.aws_eks_addon_version.latest["vpc-cni"].version
+resource "aws_eks_addon" "vpc_cni" {
+  cluster_name      = module.eks.cluster_name
+  addon_name        = "vpc-cni"
+  resolve_conflicts = "OVERWRITE"
+  addon_version     = data.aws_eks_addon_version.latest["vpc-cni"].version
 
-#   configuration_values = jsonencode({
-#     env = {
-#       # Reference https://aws.github.io/aws-eks-best-practices/reliability/docs/networkmanagement/#cni-custom-networking
-#       AWS_VPC_K8S_CNI_CUSTOM_NETWORK_CFG = "true"
-#       ENI_CONFIG_LABEL_DEF               = "topology.kubernetes.io/zone"
+  configuration_values = jsonencode({
+    env = {
+      # Reference https://aws.github.io/aws-eks-best-practices/reliability/docs/networkmanagement/#cni-custom-networking
+      AWS_VPC_K8S_CNI_CUSTOM_NETWORK_CFG = "true"
+      ENI_CONFIG_LABEL_DEF               = "topology.kubernetes.io/zone"
 
-#       # Reference docs https://docs.aws.amazon.com/eks/latest/userguide/cni-increase-ip-addresses.html
-#       ENABLE_PREFIX_DELEGATION = "true"
-#       WARM_PREFIX_TARGET       = "1"
-#     }
-#   })
+      # Reference docs https://docs.aws.amazon.com/eks/latest/userguide/cni-increase-ip-addresses.html
+      ENABLE_PREFIX_DELEGATION = "true"
+      WARM_PREFIX_TARGET       = "1"
+    }
+  })
 
-#   tags = local.tags
-# }
+  tags = local.tags
+}
 
 data "aws_eks_addon_version" "latest" {
   for_each = toset(["vpc-cni"])
@@ -122,24 +123,24 @@ data "aws_eks_addon_version" "latest" {
 # VPC-CNI Custom Networking ENIConfig
 ################################################################################
 
-# resource "kubectl_manifest" "eni_config" {
-#   for_each = zipmap(local.azs, slice(module.vpc.private_subnets, 3, 6))
+resource "kubectl_manifest" "eni_config" {
+  for_each = zipmap(local.azs, slice(module.vpc.private_subnets, 3, 6))
 
-#   yaml_body = yamlencode({
-#     apiVersion = "crd.k8s.amazonaws.com/v1alpha1"
-#     kind       = "ENIConfig"
-#     metadata = {
-#       name = each.key
-#     }
-#     spec = {
-#       securityGroups = [
-#         module.eks.cluster_primary_security_group_id,
-#         module.eks.node_security_group_id,
-#       ]
-#       subnet = each.value
-#     }
-#   })
-# }
+  yaml_body = yamlencode({
+    apiVersion = "crd.k8s.amazonaws.com/v1alpha1"
+    kind       = "ENIConfig"
+    metadata = {
+      name = each.key
+    }
+    spec = {
+      securityGroups = [
+        module.eks.cluster_primary_security_group_id,
+        module.eks.node_security_group_id,
+      ]
+      subnet = each.value
+    }
+  })
+}
 
 ################################################################################
 # Supporting Resources
