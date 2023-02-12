@@ -141,6 +141,12 @@ terraform apply
 
 Enter `yes` at command prompt to apply
 
+`kubectl set env daemonset aws-node \`
+` -n kube-system ENABLE_PREFIX_DELEGATION=true`
+`kubectl set env daemonset aws-node \`
+` -n kube-system ENABLE_PREFIX_DELEGATION=true`
+
+<br>
 Validate
 
 The following command will update the `kubeconfig` on your local machine and allow you to interact with your EKS Cluster using `kubectl` to validate the deployment.
@@ -319,7 +325,7 @@ After you have deployed the CNI metrics helper, you can view the CNI metrics in 
 11. In the **Customize widget title** section, enter a logical name for your dashboard title, such as <strong>EKS CNI metrics</strong>.
 12. Choose **Add to dashboard** to finish. Now your CNI metrics are added to a dashboard that you can monitor. For more information about Amazon CloudWatch Logs metrics, see [Using Amazon CloudWatch metrics](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/working_with_metrics.html) in the Amazon CloudWatch User Guide.
 
-![Application logo](/image/image-11.png)
+![Application logo](/image/image-12.png)
 
 ### End - Destroy the Lab environments
 
@@ -333,5 +339,5 @@ terraform destroy -auto-approve
 
 ## **All VPC CNI Use Cases:**
 
-![Application logo](/image/image-12.png)
+![Application logo](/image/image-11.png)
 all use cases are described in referece : [https://docs.aws.amazon.com/eks/latest/userguide/pod-networking-use-cases.html](https://docs.aws.amazon.com/eks/latest/userguide/pod-networking-use-cases.html)
