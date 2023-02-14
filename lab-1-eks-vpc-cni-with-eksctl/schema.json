@@ -1,0 +1,99 @@
+{
+  "$ref": "#/definitions/VpcCni",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "definitions": {
+    "Env": {
+      "additionalProperties": false,
+      "properties": {
+        "ADDITIONAL_ENI_TAGS": { "type": "string" },
+        "ANNOTATE_POD_IP": { "format": "boolean", "type": "string" },
+        "AWS_VPC_CNI_NODE_PORT_SUPPORT": {
+          "format": "boolean",
+          "type": "string"
+        },
+        "AWS_VPC_ENI_MTU": { "format": "integer", "type": "string" },
+        "AWS_VPC_K8S_CNI_CONFIGURE_RPFILTER": {
+          "format": "boolean",
+          "type": "string"
+        },
+        "AWS_VPC_K8S_CNI_CUSTOM_NETWORK_CFG": {
+          "format": "boolean",
+          "type": "string"
+        },
+        "AWS_VPC_K8S_CNI_EXCLUDE_SNAT_CIDRS": { "type": "string" },
+        "AWS_VPC_K8S_CNI_EXTERNALSNAT": {
+          "format": "boolean",
+          "type": "string"
+        },
+        "AWS_VPC_K8S_CNI_LOGLEVEL": { "type": "string" },
+        "AWS_VPC_K8S_CNI_LOG_FILE": { "type": "string" },
+        "AWS_VPC_K8S_CNI_RANDOMIZESNAT": { "type": "string" },
+        "AWS_VPC_K8S_CNI_VETHPREFIX": { "type": "string" },
+        "AWS_VPC_K8S_PLUGIN_LOG_FILE": { "type": "string" },
+        "AWS_VPC_K8S_PLUGIN_LOG_LEVEL": { "type": "string" },
+        "DISABLE_INTROSPECTION": { "format": "boolean", "type": "string" },
+        "DISABLE_METRICS": { "format": "boolean", "type": "string" },
+        "DISABLE_NETWORK_RESOURCE_PROVISIONING": {
+          "format": "boolean",
+          "type": "string"
+        },
+        "ENABLE_BANDWIDTH_PLUGIN": { "format": "boolean", "type": "string" },
+        "ENABLE_POD_ENI": { "format": "boolean", "type": "string" },
+        "ENABLE_PREFIX_DELEGATION": { "format": "boolean", "type": "string" },
+        "ENI_CONFIG_ANNOTATION_DEF": { "type": "string" },
+        "ENI_CONFIG_LABEL_DEF": { "type": "string" },
+        "INTROSPECTION_BIND_ADDRESS": { "type": "string" },
+        "MAX_ENI": { "format": "integer", "type": "string" },
+        "MINIMUM_IP_TARGET": { "format": "integer", "type": "string" },
+        "POD_SECURITY_GROUP_ENFORCING_MODE": { "type": "string" },
+        "WARM_ENI_TARGET": { "format": "integer", "type": "string" },
+        "WARM_IP_TARGET": { "format": "integer", "type": "string" },
+        "WARM_PREFIX_TARGET": { "format": "integer", "type": "string" }
+      },
+      "title": "Env",
+      "type": "object"
+    },
+    "Init": {
+      "additionalProperties": false,
+      "properties": { "env": { "$ref": "#/definitions/InitEnv" } },
+      "title": "Init",
+      "type": "object"
+    },
+    "InitEnv": {
+      "additionalProperties": false,
+      "properties": {
+        "DISABLE_TCP_EARLY_DEMUX": { "format": "boolean", "type": "string" }
+      },
+      "title": "InitEnv",
+      "type": "object"
+    },
+    "Limits": {
+      "additionalProperties": false,
+      "properties": {
+        "cpu": { "type": "string" },
+        "memory": { "type": "string" }
+      },
+      "title": "Limits",
+      "type": "object"
+    },
+    "Resources": {
+      "additionalProperties": false,
+      "properties": {
+        "limits": { "$ref": "#/definitions/Limits" },
+        "requests": { "$ref": "#/definitions/Limits" }
+      },
+      "title": "Resources",
+      "type": "object"
+    },
+    "VpcCni": {
+      "additionalProperties": false,
+      "properties": {
+        "env": { "$ref": "#/definitions/Env" },
+        "init": { "$ref": "#/definitions/Init" },
+        "resources": { "$ref": "#/definitions/Resources" }
+      },
+      "title": "VpcCni",
+      "type": "object"
+    }
+  }
+}

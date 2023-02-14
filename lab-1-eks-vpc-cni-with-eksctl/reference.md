@@ -11,3 +11,4 @@ https://github.com/aws/amazon-vpc-cni-k8s/issues/1571
 https://eksctl.io/announcements/nodegroup-override-announcement/
 https://github.com/aws/containers-roadmap/issues/1333
 https://aws.amazon.com/blogs/containers/amazon-eks-add-ons-advanced-configuration/
+https://eksctl.io/usage/addons/

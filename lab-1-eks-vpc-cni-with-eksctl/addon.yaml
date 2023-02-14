@@ -1,0 +1,19 @@
+# apiVersion: eksctl.io/v1alpha5
+# kind: ClusterConfig
+# addons:
+# - name: "vpc-cni"
+#   configurationValues: "{\"AWS_VPC_K8S_CNI_CUSTOM_NETWORK_CFG\":"true"\"WARM_PREFIX_TARGET\":"1"\"AWS_VPC_K8S_CNI_EXTERNALSNAT\":"true"\"DISABLE_METRICS\":"false"\}"
+#   resolveConflicts: preserve
+
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: eks-vpc-cni-eksctl-1
+  region: us-west-2
+  version: "1.24"
+
+addons:
+- name: vpc-cni
+  attachPolicyARNs:
+    - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
+  resolveConflicts: preserve

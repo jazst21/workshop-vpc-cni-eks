@@ -1,0 +1,18 @@
+---
+aws --version
+https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+---
+aws eks --region us-west-2 update-kubeconfig --name eks-vpc-cni-eksctl-1
+aws eks describe-addon-versions --addon-name vpc-cni
+aws eks describe-addon-configuration --addon-name vpc-cni --addon-version v1.12.0-eksbuild.2
+kubectl -n kube-system get ds aws-node -oyaml|grep ENABLE_PREFIX_DELEGATION -A1
+aws eks describe-addon-configuration --addon-name vpc-cni \
+--addon-version v1.12.0-eksbuild.2 --query configurationSchema --output text
+kubectl -n kube-system get ds aws-node -oyaml|grep ENABLE_PREFIX_DELEGATION -A1
+aws eks update-addon --cluster-name eks-vpc-cni-eksctl-1 \
+--addon-name vpc-cni --addon-version v1.12.0-eksbuild.2 \
+--configuration-values '{"env":{"ENABLE_PREFIX_DELEGATION":"true"}}' \
+--resolve-conflicts OVERWRITE
+aws eks describe-addon --cluster-name eks-vpc-cni-eksctl-1 --addon-name vpc-cni
+kubectl -n kube-system get ds aws-node -oyaml|grep ENABLE_PREFIX_DELEGATION -A1
+eksctl update addon -f 
